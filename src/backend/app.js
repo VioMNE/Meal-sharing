@@ -3,6 +3,8 @@ const app = express();
 const router = express.Router();
 const path = require("path");
 
+const knex = require('./database');
+
 const mealsRouter = require("./api/meals");
 const buildPath = path.join(__dirname, "../../dist");
 const port = process.env.PORT || 3000;
