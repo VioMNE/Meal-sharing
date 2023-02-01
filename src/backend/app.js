@@ -30,8 +30,8 @@ app.get("/my-route", (req, res) => {
 //Respond with all meals in the future (relative to the when datetime)
 
 app.get('/future-meals', async(req, res) => {
-  const db = await knex.raw('SELECT * FROM meal WHERE when > NOW()')
-  const rows = db[0]
+  const dbConection = await knex.raw('SELECT * FROM meal WHERE when > NOW()')
+  const rows = dbConection[0]
   if (rows.length === 0){
     res.status(404).json({ status : 'No meals available'})
   }else {
