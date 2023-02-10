@@ -11,6 +11,7 @@ router.get('/', async (req, res) => {
     const reservation = await knex('reservations').select('*');
     response.json(reservation);
   } catch (error) {
+    res.status(500).send("error");
     throw error;
   }
   
@@ -22,9 +23,10 @@ router.post('/', async (req, res) => {
   try {
     const newReservation = req.body;
       const insertedReservation = await knex('reservations').insert(newReservation);
-      response.json(insertedReservation);
+      res.status(201).json(insertedReservation);
   } catch (error) {
-    throw error;
+    res.status(500).send("error");
+    throw error;;
   }
   
 });
@@ -35,9 +37,14 @@ router.get('/:id', async (req, res) => {
   try {
     const reservationId = req.params.id;
     const reservation = await knex('reservations').where({ id: reservationId });
-    response.json(reservation);
+    if (reservation) {
+        res.json(reservation);
+      } else {
+        res.status(404).json("Reservation with the specified ID was not found.");
+      }
   } catch (error) {
-    throw error;
+    res.status(500).send("error");
+    throw error;;
   }
   
 });
@@ -47,9 +54,14 @@ router.put('/:id', async (req, res) => {
   try {
     const reservationId = req.params.id;
     const updateReservation = await knex('reservations').where({ id: reservationId }).update(req.body);
-    response.json(updateReservation);
+    if (updateReservation) {
+        res.send('Reservation successfully updated.');
+      } else {
+        res.status(404).json("Reservation with the specified ID was not found.");
+      }
   } catch (error) {
-    throw error; 
+    res.status(500).send("error");
+    throw error;; 
   }
   
 });
@@ -60,9 +72,14 @@ router.delete('/:id', async (req, res) => {
   try {
     const reservationId = req.params.id;
     const deleteReservation = await knex('reservations').where({ id: reservationId }).del();
-    response.json(deleteReservation);
+    if (deleteReservation) {
+        res.send('Reservation successfully deleted.');
+      } else {
+        res.status(404).json("Reservation with the specified ID was not found.");
+      }
   } catch (error) {
-    throw error;
+    res.status(500).send("error");
+    throw error;;
   }
   
 });

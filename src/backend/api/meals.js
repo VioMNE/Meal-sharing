@@ -8,9 +8,10 @@ const knex = require("../database");
 // GET - returns all meals 
 router.get('/', async (req, res) => { 
   try {
-    const meals = await knex('meal').select('*');
-    response.json(meals);
+    const meals = await knex('meals').select('*');
+    res.json(meals);
   } catch (error) {
+    res.status(500).send("error");
     throw error;
   }
   
@@ -20,9 +21,10 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const newMeal = req.body;
-    const insertedMeal = await knex('meal').insert(newMeal);
-    response.json(insertedMeal)
+    const insertedMeal = await knex('meals').insert(newMeal);
+    res.status(201).json(insertedMeal);
   } catch (error) {
+    res.status(500).send("error");
     throw error;
   }
   
@@ -33,9 +35,14 @@ router.post('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const mealId = req.params.id;
-    const meal = await knex('meal').where({ id: mealId });
-    response.json(meal);
+    const meal = await knex('meals').where({ id: mealId });
+    if (meal) {
+      res.json(meal);
+    } else {
+      res.status(404).json("Meal with the specified ID was not found.");
+    }
   } catch (error) {
+      res.status(500).send("error");
     throw error;
   }
   
@@ -45,10 +52,15 @@ router.get('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const mealId = req.params.id;
-    const updateMeal = await knex('meal').where({ id: mealId }).update(req.body);
-    response.json(updateMeal);
+    const updateMeal = await knex('meals').where({ id: mealId }).update(req.body);
+    if (updateMeal) {
+      res.send('Meal successfully added.');
+    } else {
+      res.status(404).json("Meal with the specified ID was not found.");
+    }
   } catch (error) {
-    throw error; 
+      res.status(500).send("error");
+    throw error;
   }
   
 });
@@ -58,9 +70,14 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => { 
   try {
     const mealId = req.params.id;
-    const deleteMeal = await knex('meal').where({ id: mealId }).del();
-    response.json(deleteMeal);
+    const deleteMeal = await knex('meals').where({ id: mealId }).del();
+    if (deleteMeal) {
+      res.send('Meal successfully deleted.');
+    } else {
+      res.status(404).json("Meal with the specified ID was not found.");
+    }
   } catch (error) {
+      res.status(500).send("error");
     throw error;
   }
   
