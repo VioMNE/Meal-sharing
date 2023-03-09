@@ -1,3 +1,4 @@
+// @ts-ignore
 const { response } = require("express");
 const express = require("express");
 const router = express.Router();
@@ -6,6 +7,7 @@ const knex = require("../database");
 
 
 // GET - returns all meals 
+// @ts-ignore
 router.get('/', async (req, res) => { 
   try {
     const meals = await knex('meals').select('*');
@@ -99,13 +101,12 @@ router.get("/", async (req, res) => {
   if ("availableReservations" in req.query) {
     const reqAvailReservation = req.query.availableReservations;
     if (reqAvailReservation !== "true") {
-      res.send("enter true value of availableReservations!");
       return;
     }
     meals.select(
       "meal.id",
       "meal.title",
-      knex.raw("(meal.max_reservations)-(reservation.number_of_guests) AS AvailableReservation")
+      knex.raw("(meal.max_reservations)-- SUM(reservation.number_of_guests)) AS AvailableReservation")
     )
     .leftJoin("reservation", "meal.id", "reservation.meal_id")
     .whereRaw("((max_reservations)-(number_of_guests)) > 0");
@@ -113,6 +114,7 @@ router.get("/", async (req, res) => {
 
   if ("title" in req.query) {
     const title = req.query.title;
+    // @ts-ignore
     if (!isNaN(title)) {
       res.send("Title should be a string!");
       return;
@@ -121,11 +123,13 @@ router.get("/", async (req, res) => {
   }
 
   if ("dateAfter" in req.query) {
+    // @ts-ignore
     const reqDate = new Date(req.query.dateAfter);
     meals.where("when_date", ">", reqDate);
   }
 
   if ("dateBefore" in req.query) {
+    // @ts-ignore
     const dateReq = new Date(req.query.dateBefore);
     meals.where("when_date", "<", dateReq);
   }
@@ -143,7 +147,9 @@ router.get("/", async (req, res) => {
     const sortKey = req.query.sort_key;
     const sortDir = req.query.sort_dir;
     const array = ["price", "when_date", "max_reservations"];
+    // @ts-ignore
     if (array.includes(sortKey)) {
+      // @ts-ignore
       meals.orderBy(sortKey, sortDir === "desc" ? "desc" : "asc");
     }
   }

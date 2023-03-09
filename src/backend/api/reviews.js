@@ -20,17 +20,27 @@ router.get('/', async (req, res) => {
 
 //POST - adds a new all Reviews  to the database
 
-router.post('/', async (req, res) => {
+router.post("/", async (request, response) => {
   try {
-    const newReview = req.body;
-      const insertedReview = await knex('reviews').insert(newReview);
-      res.status(201).json(insertedReview);
+    const review = {
+      title: request.body.title,
+      description: request.body.description,
+      meal_id: request.body.mealId,
+      stars: request.body.stars,
+      created_date: new Date(),
+    };
+    const newReviewIds = await knex("reviews").insert(review);
+    const newReviewId = newReviewIds[0];
+    const newReview = await knex("reviews").where({ id: newReviewId }).first();
+    if (!newReview) {
+      throw new Error("Unable to insert new review");
+    }
+    response.json(newReview);
   } catch (error) {
-    res.status(500).send("error");
-    throw error;;
+    throw error;
   }
-  
 });
+
 
 
 // GET - returns the all Reviews  by id 
