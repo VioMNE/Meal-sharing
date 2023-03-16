@@ -1,12 +1,14 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import TestComponent from "./components/TestComponent/TestComponent";
+import MealList from "./components/TestComponent/MealList";
 
 function App() {
   return (
     <Router>
-      <Route exact path="/">
-        <p>test</p>
+      <Route exact path="/meals">
+        <p>Meal List</p>
+        <MealList />
       </Route>
       <Route exact path="/lol">
         <p>lol</p>
