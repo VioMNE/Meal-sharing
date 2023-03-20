@@ -8,8 +8,8 @@ const knex = require("../database");
 // GET - returns all reservations 
 router.get('/', async (req, res) => { 
   try {
-    const reservation = await knex('reservations').select('*');
-    response.json(reservation);
+    const reservations = await knex('reservation').select('*');
+    response.json(reservations);
   } catch (error) {
     res.status(500).send("error");
     throw error;
@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const newReservation = req.body;
-      const insertedReservation = await knex('reservations').insert(newReservation);
+      const insertedReservation = await knex('reservation').insert(newReservation);
       res.status(201).json(insertedReservation);
   } catch (error) {
     res.status(500).send("error");
@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const reservationId = req.params.id;
-    const reservation = await knex('reservations').where({ id: reservationId });
+    const reservation = await knex('reservation').where({ id: reservationId });
     if (reservation) {
         res.json(reservation);
       } else {
@@ -53,7 +53,7 @@ router.get('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const reservationId = req.params.id;
-    const updateReservation = await knex('reservations').where({ id: reservationId }).update(req.body);
+    const updateReservation = await knex('reservation').where({ id: reservationId }).update(req.body);
     if (updateReservation) {
         res.send('Reservation successfully updated.');
       } else {
@@ -71,7 +71,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => { 
   try {
     const reservationId = req.params.id;
-    const deleteReservation = await knex('reservations').where({ id: reservationId }).del();
+    const deleteReservation = await knex('reservation').where({ id: reservationId }).del();
     if (deleteReservation) {
         res.send('Reservation successfully deleted.');
       } else {

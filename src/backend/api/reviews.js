@@ -5,11 +5,11 @@ const knex = require("../database");
 
 
 
-// GET - returns all  reviews
+// GET - returns all  review
 router.get('/', async (req, res) => { 
   try {
-    const review = await knex('reviews').select('*');
-    response.json(review);
+    const reviews = await knex('review').select('*');
+    response.json(reviews);
   } catch (error) {
     res.status(500).send("error");
     throw error;
@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
 });
 
 
-//POST - adds a new all Reviews  to the database
+//POST - adds a new all review  to the database
 
 router.post("/", async (request, response) => {
   try {
@@ -29,9 +29,9 @@ router.post("/", async (request, response) => {
       stars: request.body.stars,
       created_date: new Date(),
     };
-    const newReviewIds = await knex("reviews").insert(review);
+    const newReviewIds = await knex("review").insert(review);
     const newReviewId = newReviewIds[0];
-    const newReview = await knex("reviews").where({ id: newReviewId }).first();
+    const newReview = await knex("review").where({ id: newReviewId }).first();
     if (!newReview) {
       throw new Error("Unable to insert new review");
     }
@@ -43,13 +43,13 @@ router.post("/", async (request, response) => {
 
 
 
-// GET - returns the all Reviews  by id 
+// GET - returns the all review  by id 
 router.get('/:id', async (req, res) => {
   try {
     const reviwsId = req.params.id;
-    const review = await knex('reviews').where({ id: reviwsId });
-    if (review) {
-        res.json(review);
+    const reviews = await knex('review').where({ id: reviwsId });
+    if (reviews) {
+        res.json(reviews);
       } else {
         res.status(404).json("Review with the specified ID was not found.");
       }
@@ -60,11 +60,11 @@ router.get('/:id', async (req, res) => {
   
 });
 
-// PUT - updates the all reviews  by id
+// PUT - updates the all review  by id
 router.put('/:id', async (req, res) => {
   try {
     const reviewId = req.params.id;
-    const updateReview = await knex('reviews').where({ id: reviewId }).update(req.body);
+    const updateReview = await knex('review').where({ id: reviewId }).update(req.body);
     if (updateReview) {
         res.send('Review successfully updated.');
       } else {
@@ -77,12 +77,12 @@ router.put('/:id', async (req, res) => {
   
 });
 
-// DELETE - deletes the all reviews by id
+// DELETE - deletes the all review by id
 
 router.delete('/:id', async (req, res) => { 
   try {
     const reviewId = req.params.id;
-    const deleteReview = await knex('reviews').where({ id: reviewId }).del();
+    const deleteReview = await knex('review').where({ id: reviewId }).del();
     if (deleteReview) {
         res.send('Review successfully deleted.');
       } else {

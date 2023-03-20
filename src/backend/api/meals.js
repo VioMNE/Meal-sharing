@@ -10,7 +10,7 @@ const knex = require("../database");
 // @ts-ignore
 router.get('/', async (req, res) => { 
   try {
-    const meals = await knex('meals').select('*');
+    const meals = await knex('meal').select('*');
     res.json(meals);
   } catch (error) {
     res.status(500).send("error");
@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const newMeal = req.body;
-    const insertedMeal = await knex('meals').insert(newMeal);
+    const insertedMeal = await knex('meal').insert(newMeal);
     res.status(201).json(insertedMeal);
   } catch (error) {
     res.status(500).send("error");
@@ -37,7 +37,7 @@ router.post('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const mealId = req.params.id;
-    const meal = await knex('meals').where({ id: mealId });
+    const meal = await knex('meal').where({ id: mealId });
     if (meal) {
       res.json(meal);
     } else {
@@ -54,7 +54,7 @@ router.get('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const mealId = req.params.id;
-    const updateMeal = await knex('meals').where({ id: mealId }).update(req.body);
+    const updateMeal = await knex('meal').where({ id: mealId }).update(req.body);
     if (updateMeal) {
       res.send('Meal successfully added.');
     } else {
@@ -72,7 +72,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => { 
   try {
     const mealId = req.params.id;
-    const deleteMeal = await knex('meals').where({ id: mealId }).del();
+    const deleteMeal = await knex('meal').where({ id: mealId }).del();
     if (deleteMeal) {
       res.send('Meal successfully deleted.');
     } else {
