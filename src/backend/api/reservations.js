@@ -9,7 +9,7 @@ const knex = require("../database");
 router.get('/', async (req, res) => { 
   try {
     const reservations = await knex('reservation').select('*');
-    response.json(reservations);
+    res.json(reservations);
   } catch (error) {
     res.status(500).send("error");
     throw error;
