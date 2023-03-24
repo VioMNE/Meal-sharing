@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import Meal from './Meal';
 
+async function fetchMeals() {
+  const res = await fetch('/api/meals');
+  const data = await res.json();
+  return data;
+}
+
 function MealList() {
   const [meals, setMeals] = useState([]);
 
   useEffect(() => {
-    async function fetchMeals() {
-      const response = await fetch('/api/meals');
-      const data = await response.json();
-      setMeals(data);
-    }
-    fetchMeals();
-  }, []);
+    fetchMeals().then(data => setMeals(data));
+  },[]);
 
   return (
     <div className="meal-grid">
