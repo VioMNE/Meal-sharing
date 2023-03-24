@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import MealList from "./components/components/MealList";
 import TestComponent from "./components/TestComponent/TestComponent";
 import MealList from "./components/TestComponent/MealList";
 
@@ -12,6 +13,10 @@ function App() {
       </Route>
       <Route exact path="/lol">
         <p>lol</p>
+      </Route>
+      <Route exact path="/meals">
+        <p>Meal List</p>
+        <MealList/>
       </Route>
       <Route exact path="/test-component">
         <TestComponent></TestComponent>
