@@ -20,24 +20,30 @@ router.get('/', async (req, res) => {
 
 //POST - adds a new all review  to the database
 
-router.post("/", async (request, response) => {
+router.post("/", async (req, res) => {
+  console.log(req.body);
   try {
     const review = {
-      title: request.body.title,
-      description: request.body.description,
-      meal_id: request.body.mealId,
-      stars: request.body.stars,
+      title: req.body.title,
+      description: req.body.description,
+      meal_id: req.body.meal_id,
+      stars: req.body.stars,
       created_date: new Date(),
     };
     const newReviewIds = await knex("review").insert(review);
     const newReviewId = newReviewIds[0];
-    const newReview = await knex("review").where({ id: newReviewId }).first();
+    const newReview = await knex("review").where({ meal_id: newReviewId });
     if (!newReview) {
-      throw new Error("Unable to insert new review");
+      console.log("no new review");
+      res.status(500).send("Unable to insert new review");
+      return
+
     }
-    response.json(newReview);
+    res.json(review);
   } catch (error) {
-    throw error;
+    console.log("Error", error);
+    res.status(500).send(JSON.stringify(error));
+
   }
 });
 
@@ -46,8 +52,8 @@ router.post("/", async (request, response) => {
 // GET - returns the all review  by id 
 router.get('/:id', async (req, res) => {
   try {
-    const reviwsId = req.params.id;
-    const reviews = await knex('review').where({ id: reviwsId });
+    const reviewId = req.params.id;
+    const reviews = await knex('review').where({ meal_id: reviewId });
     if (reviews) {
         res.json(reviews);
       } else {
