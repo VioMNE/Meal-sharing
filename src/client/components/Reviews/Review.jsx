@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
+import ReviewForm from "./ReviewFrom"
 import "./Reviews.css";
 
 function Reviews() {
@@ -25,10 +26,24 @@ function Reviews() {
       });
   }, []);
 
+  const fillStars = (rating) => {
+    const stars = [];
+    for (let i = 0; i < 5; i++) {
+      if (i < rating) {
+        stars.push(<i className="fas fa-star" key={i}></i>);
+      } else {
+        stars.push(<i className="far fa-star" key={i}></i>);
+      }
+    }
+    return stars;
+  };
+
   return (
     <div className="review-page">
-      {notFound ? <p>The page you are looking for was not found.</p> : null}
-      <h1>What other people say about poke bowl</h1>
+      <div>
+        <ReviewForm/>
+      </div>
+      <h2> Reviews by costumers :</h2>
       {reviews ? (
         <ul className="review-list">
           {reviews.
@@ -39,7 +54,10 @@ function Reviews() {
               <p className="review-description">
                 Description: {review.description}
               </p>
-              <p className="review-rating">Rating: {review.stars}</p>
+              <div className="review-rating">
+                <p>Rating:</p>
+                {fillStars(review.stars)}
+              </div>
             </li>
           ))}
         </ul>

@@ -1,15 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Reviews.css";
-function ReviewForm({ mealId }) {
+
+function ReviewForm() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [rating, setRating] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [reviews, setReviews] = useState();
+  const [meals, setMeals] = useState([]);
+  const [selectedMealId, setSelectedMealId] = useState("");
+
+  useEffect(() => {
+    fetch("/api/meals")
+      .then((res) => res.json())
+      .then((data) => {
+        setMeals(data);
+      });
+  }, []);
 
   const handleFormSubmit = () => {
     const data = {
-      meal_id: mealId,
+      meal_id: selectedMealId,
       title: title,
       description: description,
       stars: rating,
@@ -37,18 +47,35 @@ function ReviewForm({ mealId }) {
         setDescription("");
         setRating("");
         setIsLoading(false);
+        setSelectedMealId("");
+        alert("Your review has been sent.");
       })
       .catch((error) => {
         console.log(error);
         alert(error);
-      })
-      // @ts-ignore
-      .finally(alert(`Your review has been sent.`));
+      });
   };
+
   return (
     <div className="reviewpage">
       <form className="res-form-container">
-        <h3 className="res-title">Write a review on this dish.</h3>
+        <h3 className="res-title">Write a review for a meal:</h3>
+        <div className="res-form-input">
+          <label htmlFor="meal">Choose a meal: </label>
+          <select
+            id="meal"
+            value={selectedMealId}
+            onChange={(e) => setSelectedMealId(e.target.value)}
+            required
+          >
+            <option value="">-- Select a meal --</option>
+            {meals.map((meal) => (
+              <option key={meal.id} value={meal.id}>
+                {meal.title}
+              </option>
+            ))}
+          </select>
+        </div>
         <div className="res-form-input">
           <label htmlFor="title">*Title: </label>
           <input
@@ -93,4 +120,6 @@ function ReviewForm({ mealId }) {
     </div>
   );
 }
+
 export default ReviewForm;
+

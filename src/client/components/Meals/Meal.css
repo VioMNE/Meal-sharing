@@ -8,6 +8,9 @@
     margin: 10px;
     flex-basis: calc(50% - 20px);
     flex-wrap: wrap;
+    margin-top: 30px; 
+    margin-bottom: 100px;
+    padding: 40px;
    
     
 
@@ -15,6 +18,9 @@
 
 .meal-details {
     padding: 10px;
+    margin-top: 50px; 
+    text-align: center;
+    
 }
 
 .meal-title {
@@ -47,4 +53,79 @@
       flex-basis: 45%;
     }
   }
+  
+  .sort-dropdown {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+
+  .sort {
+    font-size: 16px;
+    color: #333;
+    margin-right: 10px;
+  }
+  
+  select {
+    padding: 8px;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    font-size: 16px;
+    color: #333;
+    margin-left: 10px;
+  }
+  
+  select:focus {
+    outline: none;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+  }
+  
+  button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    font-size: 16px;
+    color: #444;
+  }
+  
+  button:hover {
+    background-color: rgb(240, 205, 140);
+  }
+  
+  button:focus {
+    outline: none;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+  }
+  
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 150px; 
+    margin-bottom: 30px;
+
+  }
+
+  .input-bar[type="text"] {
+    padding: 10px;
+    border: none;
+    border-radius: 50px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    font-size: 16px;
+    color: #333;
+    width: 80%; 
+    margin: 0 auto; 
+    display: block;
+    text-align: center;
+  }
+  
+  .input-bar[type="text"]:focus {
+    outline: none;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+  }
+  
   

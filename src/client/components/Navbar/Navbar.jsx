@@ -16,6 +16,9 @@ function Navbar() {
           <Link to="/reviews">Reviews</Link>
         </li>
       </ul>
+      <div className="navbar-brand">
+        <h2>PB</h2>
+      </div>
     </nav>
   );
 }

@@ -31,7 +31,7 @@ function MealDetails() {
           <div className="res-form">
             <ReservationForm mealId={id} />
             <div>
-              <ReviewForm mealId={id} />
+              
             </div>
           </div>
         </div>

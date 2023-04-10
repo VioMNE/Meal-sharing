@@ -1,4 +1,4 @@
- @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+ @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
 @import 'theme.css';
 * {
   font-family: 'Montserrat', sans-serif;
@@ -27,7 +27,7 @@ a {
   color: #2d3233;
 }
 
-button {
+/* button {
   background-color: #3e99c0;
   border-radius: 8px;
   border-width: 0px;
@@ -35,7 +35,7 @@ button {
   color: rgb(255, 255, 255);
   padding: 5px;
   font-size: 17px;
-}
+} */
 
 @media screen and (max-width: 1400px) {
   #root {
@@ -50,3 +50,21 @@ button {
     padding-right: 0;
   }
 } 
+
+.up-down {
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+
+.up-down:hover {
+  color: #555;
+}
+
+.up-down i {
+  margin-left: 5px;
+}
