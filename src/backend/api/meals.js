@@ -7,17 +7,7 @@ const knex = require("../database");
 
 
 // GET - returns all meals 
-// @ts-ignore
-router.get('/', async (req, res) => { 
-  try {
-    const meals = await knex('meal').select('*');
-    res.json(meals);
-  } catch (error) {
-    res.status(500).send("error");
-    throw error;
-  }
-  
-});
+
 
 // POST - adds a new meal to the database 
 router.post('/', async (req, res) => {
