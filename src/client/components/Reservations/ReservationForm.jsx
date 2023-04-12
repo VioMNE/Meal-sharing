@@ -19,35 +19,38 @@ function ReservationForm({ mealId }) {
       created_date: new Date().toJSON().slice(0, 10),
     };
     setLoading(true);
-    fetch("/api/reservations", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(bookingData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Something went wrong.");
-        }
-        return response.json();
+    if (availableReservations > 0) {
+      fetch("/api/reservations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookingData),
       })
-      .then((data) => {
-        console.log(data);
-        setName("");
-        setEmail("");
-        setPhone("");
-        setNumberOfGuests("");
-        setLoading(false);
-      })
-      .catch((error) => {
-        alert(error);
-      })
-
-      .finally(() => {
-        updateAvailableReservations();
-      });
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Something went wrong.");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setName("");
+          setEmail("");
+          setPhone("");
+          setNumberOfGuests("");
+          setLoading(false);
+        })
+        .catch((error) => {
+          alert(error);
+        })
+        .finally(() => {
+          updateAvailableReservations();
+        });
+    } else {
+      alert("Sorry, there are no available reservations.");
+    }
   };
+  
 
   const updateAvailableReservations = async () => {
     const reservations = await fetch(`/api/reservations/${mealId}`).then((r) =>
@@ -69,8 +72,10 @@ function ReservationForm({ mealId }) {
   return (
     <form className="reservation-form-container">
       <h3 className="reservation-title">Make your reservation.</h3>
-      {availableReservations !== null && (
+      {availableReservations !== null ? (
         <p>Available reservations: {availableReservations}</p>
+      ) : (
+        <p>No more reservations available.</p>
       )}
       <div className="reservation-form-input">
         <label htmlFor="name">*Name: </label>

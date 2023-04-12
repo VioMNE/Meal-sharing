@@ -2,19 +2,17 @@ import { useParams, Redirect, Link } from "react-router-dom";
 import React, { useContext } from "react";
 import { MealContext } from "../MealContext";
 import ReservationForm from "./ReservationForm";
-import ReviewForm from "../Reviews/ReviewFrom";
 
 function MealDetails() {
   // @ts-ignore
   const { id } = useParams();
   const { getMeal } = useContext(MealContext);
-
   // @ts-ignore
   const meal = getMeal(id);
+
   if (!meal) {
     return <Redirect to="/" />;
   }
-  console.log(meal.id, id);
 
   return (
     <div>
@@ -31,7 +29,7 @@ function MealDetails() {
           <div className="res-form">
             <ReservationForm mealId={id} />
             <div>
-              <ReviewForm mealId={id} />
+              
             </div>
           </div>
         </div>
