@@ -7,7 +7,7 @@ function MealList() {
   const { meals, error, loading, getMeal } = useContext(MealContext);
   
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortKey, setSortKey] = useState("when_date");
+  const [sortKey, setSortKey] = useState("created_date");
   const [sortDir, setSortDir] = useState("asc");
 
   const handleSearch = (e) => {
@@ -71,7 +71,7 @@ function MealList() {
         <label className="sort">
           Sort by:
           <select className="sort-select" value={sortKey} onChange={handleSort}>
-            <option value="when_date">Date</option>
+            <option value="created_date">Date</option>
             <option value="max_reservations">Reservations</option>
             <option value="price">Price</option>
           </select>
@@ -89,7 +89,7 @@ function MealList() {
         {sortedMeals.map((meal) => (
           <div key={meal.id}>
             <Link to={`/meals/${meal.id}`}>
-              <Meal meal={meal} />
+              <Meal meal={meal} showDetails={false} />
             </Link>
           </div>
         ))}

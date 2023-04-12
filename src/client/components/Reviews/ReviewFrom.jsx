@@ -25,7 +25,6 @@ function ReviewForm() {
       stars: rating,
       created_date: new Date().toJSON().slice(0, 10),
     };
-    console.log(data);
     setIsLoading(true);
 
     fetch("/api/reviews", {
@@ -42,7 +41,6 @@ function ReviewForm() {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
         setTitle("");
         setDescription("");
         setRating("");
@@ -51,7 +49,6 @@ function ReviewForm() {
         alert("Your review has been sent.");
       })
       .catch((error) => {
-        console.log(error);
         alert(error);
       });
   };
@@ -113,8 +110,8 @@ function ReviewForm() {
             required
           />
         </div>
-        <button type="button" onClick={handleFormSubmit}>
-          Send review
+        <button type="button" onClick={handleFormSubmit} disabled={isLoading}>
+          {isLoading ? "Sending review..." : "Send review"}
         </button>
       </form>
     </div>

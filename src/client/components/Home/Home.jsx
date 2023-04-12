@@ -13,10 +13,9 @@ function HomePage() {
       <h1>Welcome to Poké Bowl!</h1>
       <h2>Check out our bowls and enjoy your meal</h2>
       </div>
-      
       <div className="meal-grid">
         {meals.slice(0, 4).map((meal) => (
-          <Meal key={meal.id} meal={meal} />
+          <Meal key={meal.id} meal={meal} showDetails={false}  />
         ))}
       </div>
       <div className="btn">

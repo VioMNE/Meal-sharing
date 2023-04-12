@@ -1,5 +1,4 @@
 import React from "react";
-import MealDetails from "../Reservations/MealDetails";
 import "./Meal.css";
 
 function Meal({ meal: { id, title, description, price }, showDetails }) {

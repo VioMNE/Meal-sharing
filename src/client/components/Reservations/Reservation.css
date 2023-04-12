@@ -49,4 +49,15 @@
   }
 
 
+  .mealdetails-header {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    margin-top: 150px ;
+  }
   
+  .mealdetails-header h3 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+  }

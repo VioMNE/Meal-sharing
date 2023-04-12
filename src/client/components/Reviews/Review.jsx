@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ReviewForm from "./ReviewFrom"
 import "./Reviews.css";
@@ -6,22 +6,12 @@ import "./Reviews.css";
 function Reviews() {
   // @ts-ignore
   const { id } = useParams();
-  console.log(id);
-  const [isLoading, setIsLoading] = useState(false);
   const [reviews, setReviews] = useState();
-  const [requestState, setRequestState] = useState("loading");
-  const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
     fetch("api/reviews")
-      .then((res) => {
-        if (res.status === 404) {
-          setNotFound(true);
-        }
-        return res.json();
-      })
+      .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setReviews(data);
       });
   }, []);
@@ -41,7 +31,7 @@ function Reviews() {
   return (
     <div className="review-page">
       <div>
-        <ReviewForm/>
+        <ReviewForm />
       </div>
       <h2> Reviews by costumers :</h2>
       {reviews ? (
@@ -52,19 +42,20 @@ function Reviews() {
             <li className="review-card" key={review.id}>
               <p className="review-title">{review.title}</p>
               <p className="review-description">
-                Description: {review.description}
+                 {review.description}
               </p>
               <div className="review-rating">
-                <p>Rating:</p>
+                <p></p>
                 {fillStars(review.stars)}
               </div>
             </li>
           ))}
         </ul>
       ) : (
-        <div>{isLoading && <p>Loading...</p>}</div>
+        <div>Loading...</div>
       )}
     </div>
   );
 }
 export default Reviews;
+
