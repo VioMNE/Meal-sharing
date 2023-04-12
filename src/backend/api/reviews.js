@@ -53,7 +53,7 @@ router.post("/", async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const reviewId = req.params.id;
-    const reviews = await knex('review').where({ meal_id: reviewId });
+    const reviews = await knex('review').where({ id: reviewId });
     if (reviews) {
         res.json(reviews);
       } else {
